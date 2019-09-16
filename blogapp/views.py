@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.core.paginator import Paginator
 from .models import Blog
 from .models import Portfolio
+from .form import BlogPost
 
 def home(request):
     blogs = Blog.objects # query set
@@ -36,3 +37,17 @@ def portfolio(request):
     portfolios = Portfolio.objects
     return render(request, 'portfolio.html', {'portfolios':portfolios})
 
+def blogpost(request):
+    # 수행하는 기능 2
+    # 입력된 내용을 처리하는 기능 :: POST
+    if request.method == 'POST':
+        form = BlogPost(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.pub_date = timezone.now()
+            post.save()
+            return redirect('home')
+    # 빈 페이지를 띄워주는 기능 :: GET
+    else:
+        form = BlogPost()
+        return render(request, 'newblog.html', {'form':form})
