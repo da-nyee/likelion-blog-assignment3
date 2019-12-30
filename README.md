@@ -1,4 +1,4 @@
-## Blog Project (LIKELION)
+## Blog Project (LIKE LION)
 ### The Outline
 * Developed a blog by taking a Django class.
 
